@@ -113,26 +113,32 @@ int string_to_int(char s[]) {
 }
 
 int getop(char s[]) {
-  int i, c, next;
+  int i, c;
 
   while (is_space(s[0] = c = buffer_getchar()))
     ;
   s[1] = '\0';
 
   i = 0;
-  if ((! is_digit(c)) && (c != '.')) {
-    if ((c == '-') || (c == '+')) {
-      next = buffer_getchar();
-      if (! is_digit(next)) {
-        buffer_ungetchar(next);
-        return c;
+
+  if (! is_digit(c)) {
+    switch (c) {
+    case '.':
+      break;
+
+    case '-':
+    case '+':
+      c = buffer_getchar();
+      if (! is_digit(c)) {
+        buffer_ungetchar(c);
+        return s[0];
       }
-      s[1] = c = next;
-      s[2] = '\n';
-      ++i;
-    }
-    else {
+      s[++i] = c;
+      break;
+
+    default:
       return c;
+      break;
     }
   }
 
