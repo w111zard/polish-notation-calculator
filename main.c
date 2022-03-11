@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 enum {
   STACK_SIZE = 100,
@@ -193,8 +194,7 @@ int main(int argc, char **argv) {
 
     case '%':
       op2 = stack_pop();
-      op1 = stack_pop();
-      stack_push(op1 - (op2 * (op1 / op2)));
+      stack_push(fmod(stack_pop(), op2));
       break;
 
     case '\n':
