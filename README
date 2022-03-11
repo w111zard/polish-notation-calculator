@@ -1,0 +1,9 @@
+Install:
+make
+sudo make install
+
+Run:
+calc
+
+Unisntall:
+sudo make uninstall
