@@ -160,7 +160,8 @@ int getop(char s[]) {
 
 int main(int argc, char **argv) {
   char s[OPERATIONS_LIMIT];
-  double second_operator;
+  double op1;
+  double op2;
   int type;
   while ((type = getop(s)) != EOF) {
     switch (type) {
@@ -173,8 +174,8 @@ int main(int argc, char **argv) {
       break;
 
     case '-':
-      second_operator = stack_pop();
-      stack_push(stack_pop() - second_operator);
+      op2 = stack_pop();
+      stack_push(stack_pop() - op2);
       break;
 
     case '*':
@@ -182,12 +183,18 @@ int main(int argc, char **argv) {
       break;
 
     case '/':
-      second_operator = stack_pop();
-      if (second_operator == 0) {
+      op2 = stack_pop();
+      if (op2 == 0) {
         printf("### Error: division by zero! ###\n");
         return 1;
       }
-      stack_push(stack_pop() / second_operator);
+      stack_push(stack_pop() / op2);
+      break;
+
+    case '%':
+      op2 = stack_pop();
+      op1 = stack_pop();
+      stack_push(op1 - (op2 * (op1 / op2)));
       break;
 
     case '\n':
